@@ -1,0 +1,24 @@
+# name: test_get_local_config_merges_rcfile_with_default_config
+  ''
+---
+# name: test_get_local_config_merges_rcfile_with_default_config.1
+  ''
+---
+# name: test_get_local_config_returns_default_config_if_invalid_config_file_present
+  '
+  Invalid RC file!
+  
+  '
+---
+# name: test_get_local_config_returns_default_config_if_invalid_config_file_present.1
+  ''
+---
+# name: test_get_local_config_returns_default_config_if_no_config_file_present
+  '
+  No config file found in current directory! Proceeding with defaults.
+  
+  '
+---
+# name: test_get_local_config_returns_default_config_if_no_config_file_present.1
+  ''
+---

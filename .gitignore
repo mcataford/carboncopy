@@ -4,8 +4,6 @@ __pycache__/
 *$py.class
 *.sw[a-z]
 
-#Temporarily
-tests/
 # C extensions
 *.so
 
