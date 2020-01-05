@@ -1,4 +1,4 @@
-name: CarbonCopy CIDI
+name: CarbonCopy CICD
 
 on: [push]
 
