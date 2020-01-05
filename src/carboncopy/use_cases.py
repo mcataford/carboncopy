@@ -58,7 +58,17 @@ class UseCases:
         path = Path(self.config["temp_directory"])
         template_files = get_template_file_paths(path)
 
-        staged = [path["destination"] for path in template_files]
+        def can_stage(path):
+            path_str = str(path)
+            return not re.match(FORCED_IGNORE_PATTERNS, path_str) and all(
+                [re.match(patt, path_str) for patt in self.config["ignore"]]
+            )
+
+        staged = [
+            path["destination"]
+            for path in template_files
+            if can_stage(path["destination"])
+        ]
 
         print(
             "Overwriting the following from {org}/{repo}".format(

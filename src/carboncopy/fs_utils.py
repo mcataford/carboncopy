@@ -1,6 +1,7 @@
 import shutil
 from pathlib import Path
 from typing import Union, List, Dict, Any
+import os
 
 
 def clean_temp_files(path: Path) -> None:
@@ -16,9 +17,8 @@ def get_template_file_paths(path: Path) -> List[Dict[str, Path]]:
     while stack:
         current_path = stack.pop()
 
-        file_paths.append(current_path)
-
         if not current_path.is_dir():
+            file_paths.append(current_path)
             continue
 
         for child in current_path.iterdir():
@@ -32,6 +32,9 @@ def get_template_file_paths(path: Path) -> List[Dict[str, Path]]:
 
 
 def squash(source: Path, destination: Path) -> None:
+    if not destination.parent.exists():
+        os.makedirs(destination.parent)
+
     try:
         shutil.copy(source, destination)
         print(
