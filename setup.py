@@ -17,8 +17,9 @@ setuptools.setup(
     packages=setuptools.find_packages(),
     classifiers=[
         "Development Status :: 3 - Alpha",
-        "License :: MIT",
-        "Topic :: Software Development :: Version Management",
+        "Environment :: Console",
+        "License :: OSI Approved :: MIT License",
+        "Topic :: Software Development :: Version Control :: Git",
     ],
     install_requires=["requests>=2.22.0", "inquirer==2.6.3"],
     python_requires=">=3.6",
