@@ -1,0 +1,1 @@
+RCFILE_PATH = ".carboncopyrc"
