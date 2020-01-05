@@ -10,16 +10,21 @@ def format_all(ctx):
 def typecheck(ctx):
     ctx.run("mypy src")
 
+
 @task
 def package(ctx):
     ctx.run("rm -rf dist && python setup.py sdist bdist_wheel")
 
-@task(optional=['test'])
+
+@task(optional=["test"])
 def publish(ctx, test=False):
     if test:
-        ctx.run("twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*")
+        ctx.run(
+            "twine upload --verbose --repository-url https://test.pypi.org/legacy/ dist/*"
+        )
     else:
         ctx.run("twine upload dist/*")
+
 
 ns = Collection()
 ns.add_task(format_all, name="format")
