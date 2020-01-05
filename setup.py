@@ -14,6 +14,6 @@ setuptools.setup(
     url="",
     packages=setuptools.find_packages(),
     classifiers=[],
-    install_requires=["requests>=2.22.0"],
+    install_requires=["requests>=2.22.0", "inquirer==2.6.3"],
     python_requires=">=3.6",
 )
