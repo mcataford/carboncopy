@@ -14,7 +14,11 @@ With `carboncopy`, you are one command away from pulling in the latest changes f
 
 ## 📦 Installation
 
-As it is not yet published on `PyPi`, you can simply clone this repository and use `pip install <path>` to install it in your local environment.
+It's easy as 1, 2, 3!
+
+```
+pip install carboncopy
+```
 
 ## 🔨 Usage
 
