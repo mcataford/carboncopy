@@ -6,11 +6,12 @@ with open("README.md", "r") as fh:
 setuptools.setup(
     entry_points={"console_scripts": ["carboncopy = src.carboncopy.main:run"]},
     name="carboncopy",
-    version="0.0.1",
+    version="0.0.2",
     author="Marc Cataford",
     author_email="c.marcandre@gmail.com",
     description="A small CLI utility to keep your repositories up-to-date with their templates",
     long_description=long_description,
+    long_description_content_type="text/markdown",
     url="",
     packages=setuptools.find_packages(),
     classifiers=[],
