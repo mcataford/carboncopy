@@ -10,8 +10,9 @@ from typing import List, Dict, Any
 
 from .config_defaults import CONFIG_DEFAULTS
 from .constants import RCFILE_PATH, FORCED_IGNORE_PATTERNS
-from .fs_utils import squash, clean_temp_files, get_template_file_paths
+from .fs_utils import Transform, squash, clean_temp_files, get_template_transforms
 from .git_utils import get_local_repository_meta, get_repo_metadata, clone_template_head
+from .cli_utils import prompt_staging_files_confirmation
 
 
 def get_local_config(root_path: Path = Path(".")) -> Dict[str, Any]:
@@ -54,37 +55,39 @@ class UseCases:
             self.template_repo["clone_url"], Path(self.config["temp_directory"])
         )
 
-    def stage_changes(self) -> List[Dict[str, Path]]:
+    def stage_changes(self) -> List[Transform]:
         path = Path(self.config["temp_directory"])
-        template_files = get_template_file_paths(path)
+        available_transforms = get_template_transforms(path)
 
-        def can_stage(path):
-            path_str = str(path)
+        def can_stage(path_str: str) -> bool:
             return not re.match(FORCED_IGNORE_PATTERNS, path_str) and all(
                 [re.match(patt, path_str) for patt in self.config["ignore"]]
             )
 
-        staged = [
-            path["destination"]
-            for path in template_files
-            if can_stage(path["destination"])
+        allowed_transforms = [
+            transform
+            for transform in available_transforms
+            if can_stage(transform.get_destination(as_str=True))
         ]
 
-        print(
-            "Overwriting the following from {org}/{repo}".format(
-                org=self.org, repo=self.repo
-            )
+        destinations = [
+            transform.get_destination(as_str=True) for transform in allowed_transforms
+        ]
+        chosen_files = prompt_staging_files_confirmation(
+            destinations, "{}/{}".format(self.org, self.repo)
         )
+        chosen_transforms = [
+            transform
+            for transform in allowed_transforms
+            if transform.get_destination(as_str=True)
+            in chosen_files["suggested_changes"]
+        ]
 
-        for staged_file in staged:
-            print(str(staged_file))
+        return chosen_transforms
 
-        return template_files
-
-    def apply_changes(self, paths: List[Dict[str, Path]]) -> None:
+    def apply_changes(self, paths: List[Transform]) -> None:
         for path in paths:
-            if not re.match(FORCED_IGNORE_PATTERNS, str(path["destination"])):
-                squash(path["template"], path["destination"])
+            squash(path)
 
     def clean_up(self) -> None:
         clean_temp_files(Path(self.config["temp_directory"]))

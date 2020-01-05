@@ -4,12 +4,31 @@ from typing import Union, List, Dict, Any
 import os
 
 
+class Transform:
+    def __init__(self, source: Path, destination: Path):
+        self.source = source
+        self.destination = destination
+
+    def get_source(self, as_str: bool = False):
+        return str(self.source) if as_str else self.source
+
+    def get_destination(self, as_str: bool = False):
+        return str(self.destination) if as_str else self.destination
+
+    def __repr__(self):
+        return "<{classname} {source} -> {destination}>".format(
+            classname=self.__class__,
+            source=str(self.source),
+            destination=str(self.destination),
+        )
+
+
 def clean_temp_files(path: Path) -> None:
     if path:
         shutil.rmtree(path, True)
 
 
-def get_template_file_paths(path: Path) -> List[Dict[str, Path]]:
+def get_template_transforms(path: Path) -> List[Transform]:
     file_paths = []
 
     stack = [path]
@@ -26,12 +45,15 @@ def get_template_file_paths(path: Path) -> List[Dict[str, Path]]:
             stack.append(child_path)
 
     return [
-        {"template": filename, "destination": filename.relative_to(path)}
+        Transform(source=filename, destination=filename.relative_to(path))
         for filename in file_paths
     ]
 
 
-def squash(source: Path, destination: Path) -> None:
+def squash(transform: Transform) -> None:
+    destination = transform.get_destination()
+    source = transform.get_source()
+
     if not destination.parent.exists():
         os.makedirs(destination.parent)
 
