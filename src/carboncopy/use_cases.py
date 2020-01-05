@@ -33,8 +33,8 @@ def get_local_config(root_path: Path = Path(".")) -> Dict[str, Any]:
         pretty_print(
             "No config file found in current directory! Proceeding with defaults."
         )
-    except Exception as e:
-        pretty_print(e.__class__)
+    except ValueError:
+        pretty_print("Invalid RC file!")
 
     return CONFIG_DEFAULTS
 
