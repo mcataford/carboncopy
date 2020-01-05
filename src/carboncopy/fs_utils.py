@@ -3,6 +3,8 @@ from pathlib import Path
 from typing import Union, List, Dict, Any
 import os
 
+from .print_utils import pretty_print
+
 
 class Transform:
     def __init__(self, source: Path, destination: Path):
@@ -59,17 +61,17 @@ def squash(transform: Transform) -> None:
 
     try:
         shutil.copy(source, destination)
-        print(
+        pretty_print(
             "Copied {source} -> {destination}".format(
                 source=source, destination=destination
             )
         )
     except IsADirectoryError:
-        print(
+        pretty_print(
             "Failed to copy {source} -> {destination}".format(
                 source=source, destination=destination
             )
         )
     except Exception as e:
-        print(e.__class__)
-        print(e)
+        pretty_print(e.__class__)
+        pretty_print(e)

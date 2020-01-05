@@ -13,6 +13,7 @@ from .constants import RCFILE_PATH, FORCED_IGNORE_PATTERNS
 from .fs_utils import Transform, squash, clean_temp_files, get_template_transforms
 from .git_utils import get_local_repository_meta, get_repo_metadata, clone_template_head
 from .cli_utils import prompt_staging_files_confirmation
+from .print_utils import pretty_print
 
 
 def get_local_config(root_path: Path = Path(".")) -> Dict[str, Any]:
@@ -29,10 +30,11 @@ def get_local_config(root_path: Path = Path(".")) -> Dict[str, Any]:
         return merged_config
 
     except FileNotFoundError:
-        print("No config file found in current directory! Proceeding with defaults.")
+        pretty_print(
+            "No config file found in current directory! Proceeding with defaults."
+        )
     except Exception as e:
-        print(e.__class__)
-        print(e)
+        pretty_print(e.__class__)
 
     return CONFIG_DEFAULTS
 

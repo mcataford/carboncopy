@@ -1,4 +1,5 @@
 from .use_cases import get_local_config, UseCases
+from .print_utils import pretty_print
 
 
 def run():
@@ -10,12 +11,9 @@ def run():
     try:
         use_cases.clone_template_repository()
         paths = use_cases.stage_changes()
-        print("Applying changes")
         use_cases.apply_changes(paths)
-        print("All done")
     except Exception as e:
-        print(e.__class__)
-        print(e)
-        pass
+        pretty_print(e.__class__)
+        pretty_print(e)
     finally:
         use_cases.clean_up()
