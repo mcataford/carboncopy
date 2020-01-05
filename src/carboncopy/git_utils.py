@@ -7,6 +7,14 @@ import requests
 from .constants import FETCH_URL_PATTERN, GIT_EXT_PATTERN, GIT_LINK_PATTERN
 
 
+class NotInAGitRepositoryError(Exception):
+    pass
+
+
+class NoTemplateError(Exception):
+    pass
+
+
 def clone_template_head(url: str, destination: Path) -> None:
     _run(
         "git clone {url} {location}".format(url=url, location=destination.resolve()),
@@ -24,6 +32,8 @@ def get_local_repository_meta():
             org, repo = match.group(0).split("/")
 
             return org, re.sub(GIT_EXT_PATTERN, "", repo)
+
+    return None, None
 
 
 def get_repo_metadata(owner, repo):

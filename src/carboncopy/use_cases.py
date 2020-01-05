@@ -11,7 +11,13 @@ from typing import List, Dict, Any
 from .config_defaults import CONFIG_DEFAULTS
 from .constants import RCFILE_PATH, FORCED_IGNORE_PATTERNS
 from .fs_utils import Transform, squash, clean_temp_files, get_template_transforms
-from .git_utils import get_local_repository_meta, get_repo_metadata, clone_template_head
+from .git_utils import (
+    NoTemplateError,
+    NotInAGitRepositoryError,
+    get_local_repository_meta,
+    get_repo_metadata,
+    clone_template_head,
+)
 from .cli_utils import prompt_staging_files_confirmation
 from .print_utils import pretty_print
 
@@ -48,9 +54,17 @@ class UseCases:
 
     def fetch_template_repository_details(self) -> None:
         org, repo = get_local_repository_meta()
-        self.template_repo = get_repo_metadata(org, repo)
+        template_repo_data = get_repo_metadata(org, repo)
+
+        if not (org and repo):
+            raise NotInAGitRepositoryError()
+
+        if not template_repo_data:
+            raise NoTemplateError()
+
         self.org = org
         self.repo = repo
+        self.template_repo = template_repo_data
 
     def clone_template_repository(self) -> None:
         clone_template_head(
