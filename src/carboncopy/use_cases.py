@@ -9,7 +9,7 @@ import uuid
 from typing import List, Dict, Any
 
 from .config_defaults import CONFIG_DEFAULTS
-from .constants import RCFILE_PATH
+from .constants import RCFILE_PATH, FORCED_IGNORE_PATTERNS
 from .fs_utils import squash, clean_temp_files, get_template_file_paths
 from .git_utils import get_local_repository_meta, get_repo_metadata, clone_template_head
 
@@ -73,7 +73,8 @@ class UseCases:
 
     def apply_changes(self, paths: List[Dict[str, Path]]) -> None:
         for path in paths:
-            squash(path["template"], path["destination"])
+            if not re.match(FORCED_IGNORE_PATTERNS, str(path["destination"])):
+                squash(path["template"], path["destination"])
 
     def clean_up(self) -> None:
         clean_temp_files(Path(self.config["temp_directory"]))

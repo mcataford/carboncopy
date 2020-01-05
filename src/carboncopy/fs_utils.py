@@ -9,10 +9,25 @@ def clean_temp_files(path: Path) -> None:
 
 
 def get_template_file_paths(path: Path) -> List[Dict[str, Path]]:
-    # TODO: expand to proper nested file structure.
+    file_paths = []
+
+    stack = [path]
+
+    while stack:
+        current_path = stack.pop()
+
+        file_paths.append(current_path)
+
+        if not current_path.is_dir():
+            continue
+
+        for child in current_path.iterdir():
+            child_path = Path(child)
+            stack.append(child_path)
+
     return [
-        {"template": Path(filename), "destination": Path(filename).relative_to(path)}
-        for filename in path.iterdir()
+        {"template": filename, "destination": filename.relative_to(path)}
+        for filename in file_paths
     ]
 
 
