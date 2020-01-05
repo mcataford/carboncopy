@@ -2,6 +2,8 @@
 
 Keep your repositories up-to-date with their templates in a few keystrokes.
 
+![CarbonCopy CICD](https://github.com/mcataford/carboncopy/workflows/CarbonCopy%20CICD/badge.svg) ![PyPi version](https://img.shields.io/pypi/v/carboncopy) ![Wheel](https://img.shields.io/pypi/wheel/carboncopy) ![License](https://img.shields.io/pypi/l/carboncopy) 
+
 ## ❓ Why `carboncopy`?
 
 [Github Template Repositories](https://github.blog/2019-06-06-generate-new-repositories-with-repository-templates/) made it really easy to skip project boilerplate setup steps and to produce "new project kits" that ensure that all your (or your organization's) new projects have all the must-haves. Problem is, templates aren't set in stone and it's likely that templates get updated after some projects have been spawned from it.
