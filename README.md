@@ -2,7 +2,7 @@
 
 Keep your repositories up-to-date with their templates in a few keystrokes.
 
-![CarbonCopy CICD](https://github.com/mcataford/carboncopy/workflows/CarbonCopy%20CICD/badge.svg) ![PyPi version](https://img.shields.io/pypi/v/carboncopy) ![Wheel](https://img.shields.io/pypi/wheel/carboncopy) ![License](https://img.shields.io/pypi/l/carboncopy) 
+![CarbonCopy CICD](https://github.com/mcataford/carboncopy/workflows/CarbonCopy%20CICD/badge.svg) ![PyPi version](https://img.shields.io/pypi/v/carboncopy) ![Wheel](https://img.shields.io/pypi/wheel/carboncopy) ![License](https://img.shields.io/pypi/l/carboncopy) ![Status](https://img.shields.io/pypi/status/carboncopy) 
 
 ## ❓ Why `carboncopy`?
 
