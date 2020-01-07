@@ -1,5 +1,7 @@
 from invoke import Collection, task
 
+TMP_PATH = "/tmp/carboncopy_pytest/"
+
 
 @task
 def format_all(ctx):
@@ -26,8 +28,14 @@ def publish(ctx, test=False):
         ctx.run("twine upload dist/*")
 
 
+@task
+def test(ctx):
+    ctx.run("pytest")
+
+
 ns = Collection()
 ns.add_task(format_all, name="format")
 ns.add_task(typecheck)
 ns.add_task(package)
 ns.add_task(publish)
+ns.add_task(test)

@@ -1,0 +1,54 @@
+# name: test_fetch_template_repository_details_throws_NoTemplateError_if_no_template_repo
+  ''
+---
+# name: test_fetch_template_repository_details_throws_NoTemplateError_if_no_template_repo.1
+  ''
+---
+# name: test_fetch_template_repository_details_throws_NotInGitRepositoryError_if_not_in_repo
+  ''
+---
+# name: test_fetch_template_repository_details_throws_NotInGitRepositoryError_if_not_in_repo.1
+  ''
+---
+# name: test_get_local_config_merges_rcfile_with_default_config
+  ''
+---
+# name: test_get_local_config_merges_rcfile_with_default_config.1
+  ''
+---
+# name: test_get_local_config_returns_default_config_if_invalid_config_file_present
+  '
+  Invalid RC file!
+  
+  '
+---
+# name: test_get_local_config_returns_default_config_if_invalid_config_file_present.1
+  ''
+---
+# name: test_get_local_config_returns_default_config_if_no_config_file_present
+  '
+  No config file found in current directory! Proceeding with defaults.
+  
+  '
+---
+# name: test_get_local_config_returns_default_config_if_no_config_file_present.1
+  ''
+---
+# name: test_stage_changes_creates_transforms_for_all_valid_changes
+  ''
+---
+# name: test_stage_changes_creates_transforms_for_all_valid_changes.1
+  ''
+---
+# name: test_stage_changes_ignores_all_configured_ignore_patterns
+  ''
+---
+# name: test_stage_changes_ignores_all_configured_ignore_patterns.1
+  ''
+---
+# name: test_stage_changes_ignores_all_forced_ignore_patterns
+  ''
+---
+# name: test_stage_changes_ignores_all_forced_ignore_patterns.1
+  ''
+---

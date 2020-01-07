@@ -23,3 +23,6 @@ jobs:
     - name: Formatter
       run: |
         black src *.py --check
+    - name: Test
+      run: |
+        pytest

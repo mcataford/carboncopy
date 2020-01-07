@@ -38,7 +38,7 @@ def get_template_transforms(path: Path) -> List[Transform]:
     while stack:
         current_path = stack.pop()
 
-        if not current_path.is_dir():
+        if not Path(current_path).is_dir():
             file_paths.append(current_path)
             continue
 
@@ -47,7 +47,10 @@ def get_template_transforms(path: Path) -> List[Transform]:
             stack.append(child_path)
 
     return [
-        Transform(source=filename, destination=filename.relative_to(path))
+        Transform(
+            source=filename,
+            destination=path.parent.joinpath(filename.relative_to(path)),
+        )
         for filename in file_paths
     ]
 
@@ -69,9 +72,8 @@ def squash(transform: Transform) -> None:
     except IsADirectoryError:
         pretty_print(
             "Failed to copy {source} -> {destination}".format(
-                source=source, destination=destination
+                source=source, destination=destination,
             )
         )
     except Exception as e:
-        pretty_print(e.__class__)
-        pretty_print(e)
+        pretty_print(str(e.__class__))
