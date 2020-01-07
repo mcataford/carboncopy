@@ -6,4 +6,5 @@ pyenv install -s
 pyenv virtualenv $VENV_NAME
 pyenv activate $VENV_NAME
 
+pip install wheel twine
 pip install -r $REQ_FILE
