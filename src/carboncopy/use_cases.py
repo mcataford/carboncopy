@@ -46,18 +46,23 @@ def get_local_config(root_path: Path = Path(".")) -> Dict[str, Any]:
 
 
 class UseCases:
-    def __init__(self, config: Dict[str, Any]) -> None:
+    def __init__(
+        self, config: Dict[str, Any], non_interactive=False, root_path=Path(".")
+    ) -> None:
         self.config = config
         self.template_repo: Dict[str, str] = {}
         self.org = None
         self.repo = None
+        self.non_interactive = non_interactive
+        self.root_path = root_path
 
     def fetch_template_repository_details(self) -> None:
         org, repo = get_local_repository_meta()
-        template_repo_data = get_repo_metadata(org, repo)
 
         if not (org and repo):
             raise NotInAGitRepositoryError()
+
+        template_repo_data = get_repo_metadata(org, repo)
 
         if not template_repo_data:
             raise NoTemplateError()
@@ -72,13 +77,16 @@ class UseCases:
         )
 
     def stage_changes(self) -> List[Transform]:
-        path = Path(self.config["temp_directory"])
+        path = self.root_path.joinpath(Path(self.config["temp_directory"]))
         available_transforms = get_template_transforms(path)
 
         def can_stage(path_str: str) -> bool:
-            return not re.match(FORCED_IGNORE_PATTERNS, path_str) and all(
-                [re.match(patt, path_str) for patt in self.config["ignore"]]
+            is_forced_ignore = re.search(FORCED_IGNORE_PATTERNS, path_str)
+            is_custom_ignore = any(
+                [re.search(patt, path_str) for patt in self.config["ignore"]]
             )
+            is_dir = Path(path_str).is_dir()
+            return not is_dir and not is_custom_ignore and not is_forced_ignore
 
         allowed_transforms = [
             transform
@@ -86,12 +94,17 @@ class UseCases:
             if can_stage(transform.get_destination(as_str=True))
         ]
 
+        if self.non_interactive:
+            return allowed_transforms
+
         destinations = [
             transform.get_destination(as_str=True) for transform in allowed_transforms
         ]
+
         chosen_files = prompt_staging_files_confirmation(
             destinations, "{}/{}".format(self.org, self.repo)
         )
+
         chosen_transforms = [
             transform
             for transform in allowed_transforms
@@ -106,4 +119,4 @@ class UseCases:
             squash(path)
 
     def clean_up(self) -> None:
-        clean_temp_files(Path(self.config["temp_directory"]))
+        clean_temp_files(self.root_path.joinpath(Path(self.config["temp_directory"])))
