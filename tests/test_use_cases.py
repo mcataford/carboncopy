@@ -45,4 +45,22 @@ def test_get_local_config_merges_rcfile_with_default_config(tmp_path, snapshot, 
 
     assert fetched_config == expected_config
 
-    assert_captured_output_matches_snapshot(capsys, snapshot) 
+    assert_captured_output_matches_snapshot(capsys, snapshot)
+
+def test_fetch_template_repository_details_throws_NotInGitRepositoryError_if_not_in_repo():
+    pass
+
+def test_fetch_template_repository_details_throws_NoTemplateError_if_no_template_repo():
+    pass
+
+def test_stage_changes_ignores_all_forced_ignore_patterns():
+    pass
+
+def test_stage_changes_ignores_all_configured_ignore_patterns():
+    pass
+
+def test_apply_changes_squashes_all_files():
+    pass
+
+def test_clean_up_cleans_up_temporary_directory_files():
+    pass
